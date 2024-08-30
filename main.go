@@ -50,10 +50,10 @@ func main() {
 						dataDest, err = filters.Filter_Grayscale(dataSrc)
 						break
 					case "blur":
-						dataDest, err = filters.Filter_Blur(dataSrc, 2)
+						dataDest, err = filters.Filter_Blur(dataSrc, 10)
 						break
 					case "gaus":
-						dataDest, err = filters.Filter_GaussianBlur(dataSrc, 10, 1.5)
+						dataDest, err = filters.Filter_GaussianBlur(dataSrc, 10, 5)
 						break
 					case "edge":
 						dataDest, err = filters.Filter_Edge(dataSrc, true, 10.0)

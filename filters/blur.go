@@ -2,7 +2,6 @@ package filters
 
 import (
 	. "bitmap/utils"
-	"fmt"
 	"math"
 )
 
@@ -18,7 +17,6 @@ func Filter_Blur(data []byte, radius int) (newData []byte, err error) {
 		kernel = append(kernel, row)
 	}
 	kernel = append(kernel, row)
-	fmt.Println(kernel)
 	newData, err = Convolution(data, kernel)
 	if err != nil {
 		return nil, err

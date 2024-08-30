@@ -1,8 +1,4 @@
-package filters
-
-import (
-	. "bitmap/utils"
-)
+package utils
 
 func GetPixel(data []byte, x, y int) (pixel [3]int) {
 	if x < 0 || y < 0 || x >= Header.Width || y >= Header.Height {

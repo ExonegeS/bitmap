@@ -2,6 +2,7 @@ package main
 
 import (
 	"bitmap/filters"
+	"bitmap/mirrors"
 	. "bitmap/utils"
 	"fmt"
 	"os"
@@ -63,41 +64,50 @@ func main() {
 						break
 					}
 				}
+			case "--mirror":
+				switch flag.Value {
+				case "v", "vert", "vertical", "vertically":
+					dataDest, err = mirrors.Mirror_Axis(dataSrc, true)
+					break
+				case "h", "hor", "horizontal", "horizontally":
+					dataDest, err = mirrors.Mirror_Axis(dataSrc, false)
+					break
+				}
 			}
-			if err != nil {
-				fmt.Printf("Error: %v", err)
-				os.Exit(1)
-			}
+		}
+		if err != nil {
+			fmt.Printf("Error: %v", err)
+			os.Exit(1)
 		}
 		if len(dataDest) < 1 {
 			CreateFile(dataSrc, prompt.Dest)
 		} else {
 			CreateFile(dataDest, prompt.Dest)
 		}
+
+		/*
+			switch Flags["branch"][0] {
+			case "header":
+				{
+					err = (ReadHeader(data))
+					if err != nil {
+						fmt.Printf("Error: %v\n", err)
+						os.Exit(1)
+					}
+				}
+				break
+			case "apply":
+				{
+					for
+					newData, err := filters.Filter_Negative(data)
+					if err != nil {
+						fmt.Printf("Error: %v", err)
+						os.Exit(1)
+					}
+					CreateFile(newData, Tail[1])
+				}
+			}
+
+		*/
 	}
-
-	/*
-		switch Flags["branch"][0] {
-		case "header":
-			{
-				err = (ReadHeader(data))
-				if err != nil {
-					fmt.Printf("Error: %v\n", err)
-					os.Exit(1)
-				}
-			}
-			break
-		case "apply":
-			{
-				for
-				newData, err := filters.Filter_Negative(data)
-				if err != nil {
-					fmt.Printf("Error: %v", err)
-					os.Exit(1)
-				}
-				CreateFile(newData, Tail[1])
-			}
-		}
-
-	*/
 }

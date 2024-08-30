@@ -48,12 +48,14 @@ func initFlags() {
 
 	// TODO
 	// Mirror
-	Flags["--mirror"] = append(Flags["--mirror"], "horizontal")
-	Flags["--mirror"] = append(Flags["--mirror"], "hor")
 	Flags["--mirror"] = append(Flags["--mirror"], "h")
-	Flags["--mirror"] = append(Flags["--mirror"], "vertical")
-	Flags["--mirror"] = append(Flags["--mirror"], "ver")
+	Flags["--mirror"] = append(Flags["--mirror"], "hor")
+	Flags["--mirror"] = append(Flags["--mirror"], "horizontal")
+	Flags["--mirror"] = append(Flags["--mirror"], "horizontally")
 	Flags["--mirror"] = append(Flags["--mirror"], "v")
+	Flags["--mirror"] = append(Flags["--mirror"], "ver")
+	Flags["--mirror"] = append(Flags["--mirror"], "vertical")
+	Flags["--mirror"] = append(Flags["--mirror"], "vertically")
 
 	// TODO
 	// Rotate

@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"errors"
 	"fmt"
 	"os"
 )
@@ -21,7 +22,14 @@ var Header = &BMPHeader{}
 func ReadFile(filename string) ([]byte, error) {
 	data, err := os.ReadFile(filename)
 	if err != nil {
-		return []byte{}, err
+		switch {
+		case errors.Is(err, os.ErrNotExist):
+			return nil, fmt.Errorf("%v file does not exist", filename)
+		case errors.Is(err, os.ErrPermission):
+			return nil, fmt.Errorf("%v permission denied", filename)
+		default:
+			return nil, fmt.Errorf("reading %v :unknown error:", filename)
+		}
 	}
 	return data, nil
 }

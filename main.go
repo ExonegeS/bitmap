@@ -16,10 +16,9 @@ func main() {
 	}
 
 	for _, prompt := range Prompts {
-		fmt.Println("Prompt:", prompt)
 		dataSrc, err := ReadFile(prompt.Src)
 		if err != nil {
-			fmt.Printf("Error!: %v", err)
+			fmt.Printf("Error: %v\n", err)
 			os.Exit(1)
 		}
 		dataDest := make([]byte, 0)

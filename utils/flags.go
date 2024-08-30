@@ -86,7 +86,7 @@ func initFlags() {
 func FlagsHandler(args []string) error {
 	initFlags()
 
-	if len(os.Args) < 4 {
+	if len(os.Args) < 3 {
 		return fmt.Errorf("not enough arguments in calling  the program.\n")
 	}
 	i := 0
@@ -147,11 +147,19 @@ func FlagsHandler(args []string) error {
 			continue
 		}
 		// Update current prompt Destination and/or Source
-		if Prompts[i].Dest == "" {
-			Prompts[i].Dest = strings.ReplaceAll(arg, "\"", "")
+		// Check that it has format .bmp
+		if strings.HasSuffix(arg, ".bmp") {
+			if Prompts[i].Src == "" {
+				Prompts[i].Src = strings.ReplaceAll(arg, "\"", "")
+			}
+			if Prompts[i].Dest == "" {
+				Prompts[i].Dest = strings.ReplaceAll(arg, "\"", "")
+			} else {
+				Prompts[i].Src = Prompts[i].Dest
+				Prompts[i].Dest = strings.ReplaceAll(arg, "\"", "")
+			}
 		} else {
-			Prompts[i].Src = Prompts[i].Dest
-			Prompts[i].Dest = strings.ReplaceAll(arg, "\"", "")
+			return fmt.Errorf("%v is not bitmap file\n", arg)
 		}
 	}
 	return nil

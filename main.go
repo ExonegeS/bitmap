@@ -5,13 +5,16 @@ import (
 	"bitmap/mirrors"
 	"bitmap/rotates"
 	. "bitmap/utils"
+	"errors"
 	"fmt"
 	"os"
 )
 
 func main() {
 	err := FlagsHandler(os.Args)
-	if err != nil {
+	if errors.Is(err, ErrHelperActivated) {
+		os.Exit(1)
+	} else if err != nil {
 		fmt.Printf("Error: %v", err)
 		os.Exit(1)
 	}

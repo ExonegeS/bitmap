@@ -151,6 +151,22 @@ func FlagsHandler(args []string) error {
 				value = parts[1]
 				if len(value) > 0 {
 					// Check is value is in Flags[flag] slice, if not print error
+					if flag == "--crop" {
+						n := strings.SplitN(value, "-", 4)
+						if len(n) != 4 && len(n) != 2 {
+							return fmt.Errorf("invalid crop value length: %s (%v)\n", value, n)
+						}
+						for _, v := range n {
+							if !isValidCropValue(v) {
+								return fmt.Errorf("invalid crop value: %s\n", value)
+							}
+						}
+						Prompts[i].Flags = append(Prompts[i].Flags, struct {
+							Name  string
+							Value string
+						}{flag, value})
+						continue
+					}
 					if !Contains(Flags[flag], value) {
 						return fmt.Errorf("flag %s value %s is not in allowed values.\n", flag, value)
 					}
@@ -224,6 +240,11 @@ func Contains(s []string, e string) bool {
 		}
 	}
 	return false
+}
+
+func isValidCropValue(v string) bool {
+	i, err := strconv.Atoi(v)
+	return err == nil && i >= 0
 }
 
 func Helper(args []string) {

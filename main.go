@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bitmap/crops"
 	"bitmap/filters"
 	"bitmap/mirrors"
 	"bitmap/rotates"
@@ -8,6 +9,7 @@ import (
 	"errors"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func main() {
@@ -94,6 +96,16 @@ func main() {
 					dataDest, err = mirrors.Mirror_Axis(dataDest, true)
 					break
 				}
+			case "--crop":
+				switch len(strings.SplitN(flag.Value, "-", 4)) {
+				case 2, 4:
+					dataDest, err = crops.Crop(dataSrc, strings.SplitN(flag.Value, "-", 4))
+					dataDest, err = mirrors.Mirror_Axis(dataDest, true)
+					break
+				default:
+					fmt.Println("Error: Crop requires two or four arguments.")
+					return
+				}
 			}
 		}
 		if err != nil {
@@ -105,30 +117,5 @@ func main() {
 		} else {
 			CreateFile(dataDest, prompt.Dest)
 		}
-
-		/*
-			switch Flags["branch"][0] {
-			case "header":
-				{
-					err = (ReadHeader(data))
-					if err != nil {
-						fmt.Printf("Error: %v\n", err)
-						os.Exit(1)
-					}
-				}
-				break
-			case "apply":
-				{
-					for
-					newData, err := filters.Filter_Negative(data)
-					if err != nil {
-						fmt.Printf("Error: %v", err)
-						os.Exit(1)
-					}
-					CreateFile(newData, Tail[1])
-				}
-			}
-
-		*/
 	}
 }

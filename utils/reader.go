@@ -60,10 +60,10 @@ func ReadHeader(data []byte) (err error) {
 
 	return nil
 
-	// fmt.Printf("- reserved %v\n", data[6:10]) //#
+	// fmt.Printf("- reserved %v\n", data[6:10])
 	// fmt.Printf("- Planes %v\n", data[26:28])
-	//
-	// fmt.Printf("- XpixelsPerM %v\n", data[38:42])
+	// fmt.Printf("- Compression %v\n", data[30:34])
+	// fmt.Printf("- XpixelsPerM %v\n", BytesToInt(data[38:42]))
 	// fmt.Printf("- YpixelsPerM %v\n\n", data[42:46])
 	// fmt.Printf("- Colors Used %v\n", data[46:50])
 	// fmt.Printf("- Important Colors %v\n\n", data[50:54])
@@ -102,4 +102,12 @@ func BytesToInt(data []byte) int {
 		result |= int(data[i]) << (8 * i)
 	}
 	return result
+}
+
+func IntToBytes(n int) []byte {
+	buf := make([]byte, 4)
+	for i := 0; i < 4; i++ {
+		buf[i] = byte((n >> (8 * i)) & 0xFF)
+	}
+	return buf
 }

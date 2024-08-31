@@ -50,6 +50,9 @@ func main() {
 					case "grayscale":
 						dataDest, err = filters.Filter_Grayscale(dataSrc)
 						break
+					case "pixelate":
+						dataDest, err = filters.Filter_Pixelate(dataSrc, 20)
+						break
 					case "blur":
 						dataDest, err = filters.Filter_Blur(dataSrc, 10)
 						break

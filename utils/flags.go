@@ -3,6 +3,7 @@ package utils
 import (
 	"fmt"
 	"os"
+	"strconv"
 	"strings"
 )
 
@@ -137,6 +138,42 @@ func FlagsHandler(args []string) error {
 					// Check is value is in Flags[flag] slice, if not print error
 					if !Contains(Flags[flag], value) {
 						return fmt.Errorf("flag %s value %s is not in allowed values.\n", flag, value)
+					}
+					if flag == "--rotate" {
+						if len(Prompts) < 1 {
+							Prompts[i].Flags = append(Prompts[i].Flags, struct {
+								Name  string
+								Value string
+							}{flag, "0"})
+						}
+						if len(Prompts[i].Flags) < 1 {
+							Prompts[i].Flags = append(Prompts[i].Flags, struct {
+								Name  string
+								Value string
+							}{flag, "0"})
+						}
+						if Prompts[i].Flags[0].Name != "--rotate" {
+							Prompts[i].Flags = append([]struct {
+								Name  string
+								Value string
+							}{{Name: flag, Value: "0"}}, Prompts[i].Flags...)
+						}
+						valueInt, err := strconv.Atoi(Prompts[i].Flags[0].Value)
+						if err != nil {
+							// handle error
+						}
+
+						switch value {
+						case "right", "90", "-270":
+							valueInt = (valueInt + 90) % 360
+						case "left", "-90", "270":
+							valueInt = (valueInt - 90 + 360) % 360
+						}
+						valueInt = (valueInt / 90) * 90
+
+						Prompts[i].Flags[0].Value = strconv.Itoa(valueInt)
+
+						continue
 					}
 					Prompts[i].Flags = append(Prompts[i].Flags, struct {
 						Name  string

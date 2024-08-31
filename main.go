@@ -3,6 +3,7 @@ package main
 import (
 	"bitmap/filters"
 	"bitmap/mirrors"
+	"bitmap/rotates"
 	. "bitmap/utils"
 	"fmt"
 	"os"
@@ -70,6 +71,21 @@ func main() {
 					break
 				case "h", "hor", "horizontal", "horizontally":
 					dataDest, err = mirrors.Mirror_Axis(dataSrc, false)
+					break
+				}
+			case "--rotate":
+				switch flag.Value {
+				case "90":
+					dataDest, err = rotates.Image_Transpose(dataSrc)
+					dataDest, err = mirrors.Mirror_Axis(dataDest, false)
+					break
+				case "180", "-180":
+					dataDest, err = mirrors.Mirror_Axis(dataSrc, false)
+					dataDest, err = mirrors.Mirror_Axis(dataDest, true)
+					break
+				case "270":
+					dataDest, err = rotates.Image_Transpose(dataSrc)
+					dataDest, err = mirrors.Mirror_Axis(dataDest, true)
 					break
 				}
 			}

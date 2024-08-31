@@ -15,6 +15,7 @@ type BMPHeader struct {
 	Height           int
 	PixelSize        int
 	ImageSizeInBytes int
+	Compression      int
 }
 
 var Header = &BMPHeader{}
@@ -49,12 +50,19 @@ func ReadHeader(data []byte) (err error) {
 	Header.Height = BytesToInt(data[22:26])
 	Header.PixelSize = BytesToInt(data[28:30])
 	Header.ImageSizeInBytes = BytesToInt(data[34:38])
+	Header.Compression = BytesToInt(data[30:34])
+	if Header.PixelSize != 24 {
+		return fmt.Errorf("unsupported pixel size: %v", Header.PixelSize)
+	}
+	if Header.Compression != 0 {
+		return fmt.Errorf("only uncompressed files allowed")
+	}
 
 	return nil
 
 	// fmt.Printf("- reserved %v\n", data[6:10]) //#
 	// fmt.Printf("- Planes %v\n", data[26:28])
-	// fmt.Printf("- Compression %v\n", data[30:34])
+	//
 	// fmt.Printf("- XpixelsPerM %v\n", data[38:42])
 	// fmt.Printf("- YpixelsPerM %v\n\n", data[42:46])
 	// fmt.Printf("- Colors Used %v\n", data[46:50])

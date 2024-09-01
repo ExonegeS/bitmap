@@ -289,6 +289,7 @@ Filter sharp:
 $ ./bitmap apply --filter=sharp sample.bmp images/sample-filtered-sharp.bmp
 ```
 
+![sample-filtered-edge](images/sample-filtered-sharp.bmp)
 #### Rotate
 
 The `rotate` feature rotates a bitmap image by a specified angle.
@@ -377,7 +378,7 @@ Requirements:
 2. If any error print an error message with non zero exit status.
 
 ```sh
-$ ./bitmap apply --mirror=horizontal --rotate=rigth --filter=negative --rotate=left --filter=green sample.bmp images/sample-mh-rr-fn-rl-fg.bmp
+$ ./bitmap apply --mirror=horizontal --rotate=right --filter=negative --rotate=left --filter=green sample.bmp images/sample-mh-rr-fn-rl-fg.bmp
 ```
 
 ![sample-mh-rr-fn-rl-fg](./images/sample-mh-rr-fn-rl-fg.bmp)

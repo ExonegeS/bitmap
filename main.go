@@ -118,7 +118,10 @@ func applyMirror(dataSrc []byte, value string) ([]byte, error) {
 }
 
 func applyRotate(dataSrc []byte, value string) ([]byte, error) {
+	fmt.Println(value)
 	switch value {
+	case "0":
+		return dataSrc, nil
 	case "90":
 		dataDest, err := rotates.Image_Transpose(dataSrc)
 		if err != nil {

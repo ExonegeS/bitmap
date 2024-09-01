@@ -10,8 +10,9 @@
 [![Status](https://img.shields.io/badge/status-reviewing-FA0.svg)]()
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
 <br>
-![Started](https://img.shields.io/date/1723726800?label=Started)
-![Finished](https://img.shields.io/date/1723928199?label=Finished)
+![Started](https://img.shields.io/date/1725053059?label=Started)
+![GitHub last commit](https://img.shields.io/github/last-commit/exoneges/bitmap)
+
 </div>
 
 ---

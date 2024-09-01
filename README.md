@@ -420,7 +420,7 @@ The options are:
   --crop         crops the image
 $ ./bitmap apply --help
 Usage: bitmap apply [options] <source_file> <output_file>
-        Multiple apply's may be used, in that case previous <output_file>
+        Multiple apply may be used, in that case previous <output_file>
         will be used as <source_file> for the next apply
         To change the new source file for new apply use both <source_file> <output_file>
 

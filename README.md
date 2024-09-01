@@ -341,7 +341,7 @@ $ ./bitmap header sample.bmp | grep "Pixels"
 Example of cropping a photo:
 
 ```sh
-$ ./bitmap apply --crop=20-20-100-100 sample.bmp images/sample-cropped-20-20-80-80.bmp
+$ ./bitmap apply --crop=20-20-100-100 sample.bmp images/sample-cropped-20-20-100-100.bmp
 ```
 
 Result:
@@ -409,13 +409,31 @@ Usage:
 
 Description:
   Prints bitmap file header information
-$ ./bitmap apply --help
-Usage:
-  bitmap apply [options] <source_file> <output_file>
+$ ./bitmap apply
+Usage: bitmap apply [options] <source_file> <output_file>
 
 The options are:
-  -h, --help      prints program usage information
-  ...
+  -h, --help     prints program usage information
+  --filter       applies filter to the image
+  --mirror       mirrors the image
+  --rotate       rotates the image
+  --crop         crops the image
+$ ./bitmap apply --help
+Usage: bitmap apply [options] <source_file> <output_file>
+        Multiple apply's may be used, in that case previous <output_file>
+        will be used as <source_file> for the next apply
+        To change the new source file for new apply use both <source_file> <output_file>
+
+The options are:
+  -h, --help                    prints program usage information
+  --filter=<value>     applies filter to the image
+      blue | red | green | grayscale | negative | pixelate | blur | gaus | edge | sharp 
+  --mirror=<value>     mirrors the image
+      Horizontal | Vertical
+  --rotate=<value>     rotates the image:
+      right | 90 | 180 | 270 | left | -90 | -180 | -270 
+  --crop=<value>        crops the image
+      OffsetX-OffsetY | OffsetX-OffsetY-Width-Height
 ```
 
 ### Edge Cases

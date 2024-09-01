@@ -263,6 +263,32 @@ Result:
 
 ![sample-filtered-blur](images/sample-filtered-blur.bmp)
 
+Filter gaus:
+
+```sh
+$ ./bitmap apply --filter=gaus sample.bmp images/sample-filtered-gaus.bmp
+```
+
+Result:
+
+![sample-filtered-gaus](images/sample-filtered-gaus.bmp)
+
+Filter edge:
+
+```sh
+$ ./bitmap apply --filter=edge sample.bmp images/sample-filtered-edge.bmp
+```
+
+Result:
+
+![sample-filtered-edge](images/sample-filtered-edge.bmp)
+
+Filter sharp:
+
+```sh
+$ ./bitmap apply --filter=sharp sample.bmp images/sample-filtered-sharp.bmp
+```
+
 #### Rotate
 
 The `rotate` feature rotates a bitmap image by a specified angle.

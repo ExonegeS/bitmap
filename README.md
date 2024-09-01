@@ -425,7 +425,7 @@ Usage: bitmap apply [options] <source_file> <output_file>
         To change the new source file for new apply use both <source_file> <output_file>
 
 The options are:
-  -h, --help                    prints program usage information
+  -h, --help    prints program usage information
   --filter=<value>     applies filter to the image
       blue | red | green | grayscale | negative | pixelate | blur | gaus | edge | sharp 
   --mirror=<value>     mirrors the image

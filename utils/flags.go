@@ -301,7 +301,7 @@ func Helper(args []string) {
 
 					fmt.Printf("\n")
 					fmt.Printf("The options are:\n")
-					fmt.Printf("  -h, --help     		prints program usage information\n")
+					fmt.Printf("  -h, --help	prints program usage information\n")
 					fmt.Printf("  --filter=<value>     applies filter to the image\n      ")
 					for i, value := range Flags["--filter"] {
 						if i != 0 {

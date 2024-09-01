@@ -1,8 +1,9 @@
 package rotates
 
 import (
-	. "bitmap/utils"
 	"fmt"
+
+	. "bitmap/utils"
 )
 
 func Image_Transpose(data []byte) (newData []byte, err error) {

@@ -1,11 +1,18 @@
 package crops
 
 import (
-	. "bitmap/utils"
+	"fmt"
 	"strconv"
+
+	. "bitmap/utils"
 )
 
 func Crop(data []byte, size []string) (newData []byte, err error) {
+	defer func() {
+		if e := recover(); e != nil {
+			err = fmt.Errorf("%v", e)
+		}
+	}()
 	x, err := strconv.Atoi(size[0])
 	if err != nil {
 		return nil, err
@@ -26,9 +33,15 @@ func Crop(data []byte, size []string) (newData []byte, err error) {
 			return nil, err
 		}
 	}
-	newData = make([]byte, Header.Offset+w*h*3)
+	w = TrimNumber(w, 0, Header.Width-x)
+	h = TrimNumber(h, 0, Header.Height-y)
+	if w <= 0 || h <= 0 {
+		return nil, fmt.Errorf("Crop size is invalid\n")
+	}
+	padding := (4 - (w*3)%4) % 4
+	newData = make([]byte, Header.Offset+(w*3+padding)*h)
 
-	newHeader := append(data[:2], IntToBytes(Header.Offset+w*h*3)...)
+	newHeader := append(data[:2], IntToBytes(Header.Offset+(w*3+padding)*h)...)
 	newHeader = append(newHeader, data[6:18]...)
 	newHeader = append(newHeader, IntToBytes(w)...)
 	newHeader = append(newHeader, IntToBytes(h)...)
@@ -36,26 +49,37 @@ func Crop(data []byte, size []string) (newData []byte, err error) {
 	newHeader = append(newHeader, IntToBytes(w*h*3)...)
 	newHeader = append(newHeader, data[38:54]...)
 	oldW, oldH := Header.Width, Header.Height
-
+	oldPadding := (4 - (oldW*3)%4) % 4
 	Header.Width = w
 	Header.Height = h
 	Header.FileSizeInBytes = len(newData)
-	Header.ImageSizeInBytes = w * h
+	Header.ImageSizeInBytes = (w*3 + padding) * h
 
 	copy(newData, newHeader)
 
-	// BUG: Fix some shitty code here
+	y = oldH - y - 1
 
-	y = oldH - y
 	for i := 0; i < h; i++ {
 		for j := 0; j < w; j++ {
-			pixel := [3]int{int(data[Header.Offset+(x+j)*3+(y-i)*3*oldW+2]), int(data[Header.Offset+(x+j)*3+(y-i)*3*oldW+1]), int(data[Header.Offset+(x+j)*3+(y-i)*3*oldW])}
-
-			err := SetPixel(&newData, j, i, pixel)
+			pixel := [3]int{int(data[Header.Offset+(x+j)*3+(y-i)*3*oldW+2+oldPadding*(y-i)]), int(data[Header.Offset+(x+j)*3+(y-i)*3*oldW+1+oldPadding*(y-i)]), int(data[Header.Offset+(x+j)*3+(y-i)*3*oldW+oldPadding*(y-i)])}
+			if (i+j)%10 == 0 && false {
+				pixel[0] = 255
+			}
+			err := SetPixel(&newData, j, Header.Height-i-1, pixel)
 			if err != nil {
 				return nil, err
 			}
 		}
 	}
 	return newData, nil
+}
+
+func TrimNumber(n, min, max int) int {
+	if n < min {
+		return min
+	}
+	if n > max {
+		return max
+	}
+	return n
 }

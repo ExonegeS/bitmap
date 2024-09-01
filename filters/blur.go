@@ -1,8 +1,9 @@
 package filters
 
 import (
-	. "bitmap/utils"
 	"math"
+
+	. "bitmap/utils"
 )
 
 func Filter_Blur(data []byte, radius int) (newData []byte, err error) {
